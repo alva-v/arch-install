@@ -1,5 +1,4 @@
 #!/bin/bash
-# Written with the help of https://disconnected.systems/blog/archlinux-installer/#setting-variables-and-collecting-user-input
 # This scrip installs an encrypted Arch linux system
 
 set -e # Exit when encountering an error
