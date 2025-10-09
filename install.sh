@@ -32,11 +32,11 @@ get_name() {
 
 get_password() {
     local password_type="${1}"
-    password_value=$(whiptail --nocancel --passwordbox "${password_type^} passphrase: " 8 35 3>&1 1>&2 2>&3)
-    password_value2=$(whiptail --nocancel --passwordbox "Repeat passphrase: " 8 35 3>&1 1>&2 2>&3)
+    password_value=$(whiptail --passwordbox "${password_type^} passphrase: " 8 35 3>&1 1>&2 2>&3)
+    password_value2=$(whiptail --passwordbox "Repeat passphrase: " 8 35 3>&1 1>&2 2>&3)
     while [ "$password_value" != "$password_value2" ]; do
-        password_value=$(whiptail --nocancel --passwordbox "${password_type^} passphrases don't match.\nEnter your passphrase again: " 9 35 3>&1 1>&2 2>&3)
-        password_value2=$(whiptail --nocancel --passwordbox "Repeat passphrase: " 8 35 3>&1 1>&2 2>&3)
+        password_value=$(whiptail --passwordbox "${password_type^} passphrases don't match.\nEnter your passphrase again: " 9 35 3>&1 1>&2 2>&3)
+        password_value2=$(whiptail --passwordbox "Repeat passphrase: " 8 35 3>&1 1>&2 2>&3)
     done
     echo "${password_value}"
 }
@@ -51,7 +51,7 @@ cryptpass=$(get_password "drive decryption")
 password=$(get_password "user")
 
 device_list=$(lsblk -dplnx size -o name,size | grep -vE "boot|rpmb|loop"|tac)
-device=$(whiptail --nocancel --menu "Device: " 0 0 0 ${device_list} 3>&1 1>&2 2>&3)
+device=$(whiptail --menu "Device: " 0 0 0 ${device_list} 3>&1 1>&2 2>&3)
 
 if ! whiptail --yesno --defaultno "You are about to wipe ${device}\nContinue?" 8 35; then
     echo "Aborting installation."
