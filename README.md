@@ -14,7 +14,7 @@ This simple script prompts you for:
 
 It then creates an encrypted arch install using the information you just provided.
 
-## Usage
+## Usage
 1. Boot a Live Arch install environnement
 2. Make sure you are connected to the internet
 3. `curl -s https://github.com/alva-v/arch-install/blob/main/install.sh | bash`
