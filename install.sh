@@ -110,10 +110,11 @@ systemctl enable NetworkManager.service
 EOF
 
 echo "Setting up user..."
+custom_sudoers="/etc/sudoers.d/${hostname}"
 arch-chroot /mnt << EOF
 useradd -G wheel -m "$username"
 echo -n "$password" | passwd --stdin "$username"
-echo "%wheel ALL=(ALL:ALL) ALL" | EDITOR="tee -a" visudo
+echo "%wheel ALL=(ALL:ALL) ALL" | EDITOR="tee -a" visudo --file="$custom_sudoers"
 EOF
 
 echo "Setting up boot loading..."
