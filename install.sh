@@ -51,6 +51,12 @@ get_password() {
     echo "${password_value}"
 }
 
+set_up_keyring() {
+    echo "Initializing pacman keyring..."
+    pacman --noconfirm --sync --refresh archlinux-keyring
+    pacman-key --init
+}
+
 set_up_mirror_list() {
     echo "Setting up mirror list..."
     pacman --sync --refresh
@@ -94,6 +100,7 @@ echo "Mounting partitions..."
 mount /dev/mapper/cryptlvm /mnt
 mount --mkdir "$device"1 /mnt/boot
 
+set_up_keyring || error "Error initializing pacman keyring"
 set_up_mirror_list || echo "Error setting up mirror list, using defaults."
 
 echo "Installing packages on root..."
