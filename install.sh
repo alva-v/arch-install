@@ -51,6 +51,13 @@ get_password() {
     echo "${password_value}"
 }
 
+set_up_mirror_list() {
+    echo "Setting up mirror list..."
+    pacman --sync --refresh
+    pacman --noconfirm --sync reflector
+    reflector -c FR -f 12 -l 10 --save /etc/pacman.d/mirrorlist
+}
+
 check_internet
 check_efi
 
@@ -87,10 +94,7 @@ echo "Mounting partitions..."
 mount /dev/mapper/cryptlvm /mnt
 mount --mkdir "$device"1 /mnt/boot
 
-echo "Setting up mirror list..."
-pacman -Sy
-pacman --noconfirm -S reflector
-reflector -c FR -f 12 -l 10 --save /etc/pacman.d/mirrorlist
+set_up_mirror_list || echo "Error setting up mirror list, using defaults."
 
 echo "Installing packages on root..."
 pacstrap -K /mnt base base-devel linux linux-firmware grub networkmanager cryptsetup lvm2 efibootmgr vim sudo man-db man-pages texinfo
