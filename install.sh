@@ -21,6 +21,16 @@ check_internet() {
     fi
 }
 
+delete_old_partitions() {
+    local device="${1}"
+    if lsblk -n "$device" | grep -q "part"; then
+        echo "Deleting partitions on $device..."
+        sfdisk --delete "$device"
+    else
+        echo "No partitions found on $device, skipping deletion."
+    fi
+}
+
 get_name() {
     local name_type="${1}"
     name=$(whiptail --nocancel --inputbox "${name_type^}: " 8 35 3>&1 1>&2 2>&3)
@@ -59,9 +69,7 @@ if ! whiptail --yesno --defaultno "You are about to wipe ${device}\nContinue?" 8
 fi
 
 
-echo "Deleting old partitions..."
-sfdisk --delete "$device"
-# wipefs --all "$device"
+delete_old_partitions "$device" || error "Couldn't delete old partitions"
 echo "Creating partitions..."
 sfdisk "$device" << EOF
 label:gpt
