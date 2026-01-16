@@ -129,7 +129,7 @@ systemctl enable NetworkManager.service
 EOF
 
 echo "Setting up user..."
-custom_sudoers="/etc/sudoers.d/${hostname}"
+custom_sudoers="/etc/sudoers.d/10-${hostname}"
 arch-chroot /mnt << EOF
 useradd -G wheel -m "$username"
 echo -n "$password" | passwd --stdin "$username"
