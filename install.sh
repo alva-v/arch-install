@@ -80,6 +80,7 @@ if ! whiptail --yesno --defaultno "You are about to wipe ${device}\nContinue?" 8
     echo "Aborting installation."
     exit 1
 fi
+clear
 
 
 delete_old_partitions "$device" || error "Couldn't delete old partitions"
