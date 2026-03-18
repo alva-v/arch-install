@@ -139,7 +139,7 @@ EOF
 
 echo "Setting up boot loading..."
 arch-chroot /mnt << EOF
-sed -i "s/^HOOKS=.*/HOOKS=(base udev autodetect microcode modconf kms keyboard sd-vconsole block encrypt lvm2 filesystems)/" /etc/mkinitcpio.conf
+sed -i "s/^HOOKS=.*/HOOKS=(base udev autodetect microcode modconf kms keyboard keymap sd-vconsole block encrypt lvm2 filesystems)/" /etc/mkinitcpio.conf
 mkinitcpio -p linux
 EOF
 genfstab -U /mnt >> /mnt/etc/fstab
