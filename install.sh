@@ -107,9 +107,13 @@ set_up_mirror_list || echo "Error setting up mirror list, using defaults."
 echo "Installing packages on root..."
 pacstrap -K /mnt base base-devel linux linux-firmware grub networkmanager cryptsetup lvm2 efibootmgr vim sudo man-db man-pages texinfo
 
+# Most important command! Get rid of the beep!
+echo "Disabling speaker beep"
+echo "blacklist pcspkr" >/mnt/etc/modprobe.d/nobeep.conf
+
 echo "Setting up system clock..."
 arch-chroot /mnt << EOF
-ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
+ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime
 hwclock --systohc
 systemctl enable systemd-timesyncd.service
 EOF
